@@ -5,12 +5,12 @@ const Projects = () => {
   const projects = [
     {
       id: 1,
-      title: 'FeePay - A Payment Gateway',
-      description: 'A full-stack payment gateway application with user authentication, payment integration, and admin dashboard with reciept generation.',
-      image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=500&h=300&fit=crop',
-      technologies: ['React', 'Node.js', 'MongoDB', 'Stripe', 'JWT'],
-      githubUrl: 'https://github.com/AadityaIsBack/Online-Fee-Payment-and-Reciept-System',
-      liveUrl: 'https://online-fee-payment-and-reciept-syst.vercel.app/'
+      title: 'BlogSphere - Blogging Platform',
+      description: 'A full-stack blogging platform built with the MERN stack (MongoDB, Express.js, React, Node.js).',
+      image: 'https://images.unsplash.com/photo-1611262588024-d12430b98920?w=500&h=300&fit=crop',
+      technologies: ['React', 'Node.js', 'MongoDB', 'React - Quill', 'Cloudinary'],
+      githubUrl: 'https://github.com/aaditya248659/BlogSphere-Blogging-Platform',
+      liveUrl: 'https://blog-sphere-blogging-platform.vercel.app/'
     },
     {
       id: 2,
@@ -32,13 +32,14 @@ const Projects = () => {
     },
     {
       id: 4,
-      title: 'BlogSphere - Blogging Platform',
-      description: 'A full-stack blogging platform built with the MERN stack (MongoDB, Express.js, React, Node.js).',
-      image: 'https://images.unsplash.com/photo-1611262588024-d12430b98920?w=500&h=300&fit=crop',
-      technologies: ['React', 'Node.js', 'MongoDB', 'React - Quill', 'Cloudinary'],
-      githubUrl: 'https://github.com/aaditya248659/BlogSphere-Blogging-Platform',
-      liveUrl: 'https://blog-sphere-blogging-platform.vercel.app/'
+      title: 'FeePay - A Payment Gateway',
+      description: 'A full-stack payment gateway application with user authentication, payment integration, and admin dashboard with reciept generation.',
+      image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=500&h=300&fit=crop',
+      technologies: ['React', 'Node.js', 'MongoDB', 'Stripe', 'JWT'],
+      githubUrl: 'https://github.com/AadityaIsBack/Online-Fee-Payment-and-Reciept-System',
+      liveUrl: 'https://online-fee-payment-and-reciept-syst.vercel.app/'
     },
+    
     // {
     //   id: 5,
     //   title: 'Portfolio Website',
