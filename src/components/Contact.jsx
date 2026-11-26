@@ -1,66 +1,117 @@
-import React, { useState } from 'react';
-import '../css/Contact.css';
+import { useState } from "react";
+import SectionHeading from "./SectionHeading";
+import submitContactForm from "../services/contactService";
 
-const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
+// Contact form with explicit loading and submission feedback.
+function Contact() {
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
   });
+  const [status, setStatus] = useState("idle");
+  const update = (event) =>
+    setForm((current) => ({
+      ...current,
+      [event.target.name]: event.target.value,
+    }));
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
+  const submit = async (event) => {
+    event.preventDefault();
+    setStatus("sending");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
-    // You can integrate with a service like EmailJS or your backend API
-    alert('Thank you for your message! I\'ll get back to you soon.');
-    setFormData({ name: '', email: '', message: '' });
+    try {
+      await submitContactForm(form);
+      setStatus("success");
+      setForm({
+        name: "",
+        email: "",
+        subject: "",
+        message: "",
+      });
+    } catch {
+      setStatus("error");
+    }
   };
 
   return (
-    <section className="contact" id="contact">
-      <div className="container">
-        <h2 className="section-title">
-          Let's <span className="highlight">Connect</span>
-        </h2>
-        
-        <div className="contact-content">
-          <div className="contact-info">
-            <h3>Get in Touch</h3>
-            <p className="contact-description">
-              Drop me a mail or message me on LinkedIn. I'm always excited to discuss 
-              new opportunities, collaborate on interesting projects, or just have a chat 
-              about technology and development.
-            </p>
-            
-            <div className="contact-methods">
-              <a href="mailto:aadityapathak18800@gmail.com" className="contact-method">
-                <i className="fas fa-envelope"></i>
-                <span>aadityapathak18800@gmail.com</span>
-              </a>
-              
-              <a href="https://linkedin.com/in/aadityap123" target="_blank" rel="noopener noreferrer" className="contact-method">
-                <i className="fab fa-linkedin"></i>
-                <span>LinkedIn Profile</span>
-              </a>
-              
-              <a href="https://github.com/aaditya248659" target="_blank" rel="noopener noreferrer" className="contact-method">
-                <i className="fab fa-github"></i>
-                <span>GitHub Profile</span>
-              </a>
-            </div>
-          </div>
+    <section className="contact-section" id="contact">
+      <div className="section-wrap contact-grid">
+        <div className="contact-intro">
+          <SectionHeading
+            eyebrow="Have a project in mind?"
+            title={
+              <>
+                Let's make
+                <br />
+                <span>something great.</span>
+              </>
+            }
+          />
+          <p>
+            I'm always excited to hear about new ideas, ambitious products
+            and interesting problems. Drop me a line and I'll get back to
+            you soon.
+          </p>
+          <a
+            className="contact-email"
+            href="mailto:aadityapratyaypathak@gmail.com"
+          >
+            aadityapratyaypathak@gmail.com <span>↗</span>
+          </a>
         </div>
+        <form className="contact-form" onSubmit={submit}>
+          {["name", "email", "subject"].map((field) => (
+            <label key={field}>
+              {field}
+              <input
+                type={field === "email" ? "email" : "text"}
+                name={field}
+                value={form[field]}
+                onChange={update}
+                placeholder={
+                  field === "name"
+                    ? "Your name"
+                    : field === "email"
+                      ? "you@example.com"
+                      : "What are we working on?"
+                }
+                required
+              />
+            </label>
+          ))}
+          <label>
+            Message
+            <textarea
+              name="message"
+              value={form.message}
+              onChange={update}
+              placeholder="Tell me a little about it..."
+              rows="4"
+              required
+            />
+          </label>
+          <button
+            className="button button-primary"
+            disabled={status === "sending"}
+          >
+            {status === "sending" ? "Sending..." : "Send message"} <span>↗</span>
+          </button>
+          {status === "success" && (
+            <p className="form-message success">
+              Thanks! Your message has been sent.
+            </p>
+          )}
+          {status === "error" && (
+            <p className="form-message error">
+              Something went wrong. Please email me directly.
+            </p>
+          )}
+        </form>
       </div>
     </section>
   );
-};
+}
 
 export default Contact;

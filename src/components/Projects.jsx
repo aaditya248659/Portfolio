@@ -1,99 +1,110 @@
-import React from 'react';
-import '../css/Projects.css';
+import { useState } from "react";
+import SectionHeading from "./SectionHeading";
+import projects from "../data/projects";
 
-const Projects = () => {
-  const projects = [
-    {
-      id: 1,
-      title: 'BlogSphere - Blogging Platform',
-      description: 'A full-stack blogging platform built with the MERN stack (MongoDB, Express.js, React, Node.js).',
-      image: 'https://images.unsplash.com/photo-1611262588024-d12430b98920?w=500&h=300&fit=crop',
-      technologies: ['React', 'Node.js', 'MongoDB', 'React - Quill', 'Cloudinary'],
-      githubUrl: 'https://github.com/aaditya248659/BlogSphere-Blogging-Platform',
-      liveUrl: 'https://blog-sphere-blogging-platform.vercel.app/'
-    },
-    {
-      id: 2,
-      title: 'Code Snippet Library',
-      description: 'A modern, full-stack web application for storing, managing, and executing code snippets across 40+ programming languages. Built with the MERN stack and featuring real-time code execution, gamification, and social features.',
-      image: 'https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=500&h=300&fit=crop',
-      technologies: ['React', 'Express', 'Bcrypt', 'JWT', 'Chart'],
-      githubUrl: 'https://github.com/aaditya248659/Code-Snippet-Library',
-      liveUrl: 'https://code-snippet-lib.netlify.app/'
-    },
-    {
-      id: 3,
-      title: 'BookBazzar - BookStore App',
-      description: 'A full-stack MERN (MongoDB, Express.js, React.js, Node.js) e-commerce application for buying and selling books online. Features include user authentication, shopping cart, order management, payment gateway integration, admin panel, and more.',
-      image: 'https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?w=500&h=300&fit=crop',
-      technologies: ['React', 'Express', 'Bcrypt', 'React Toastify', 'JWT'],
-      githubUrl: 'https://github.com/aaditya248659/BookBazaar-Bookstore-App',
-      liveUrl: 'https://book-bazaar-bookstore-app-xdwf.vercel.app/'
-    },
-    {
-      id: 4,
-      title: 'FeePay - A Payment Gateway',
-      description: 'A full-stack payment gateway application with user authentication, payment integration, and admin dashboard with reciept generation.',
-      image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=500&h=300&fit=crop',
-      technologies: ['React', 'Node.js', 'MongoDB', 'Stripe', 'JWT'],
-      githubUrl: 'https://github.com/AadityaIsBack/Online-Fee-Payment-and-Reciept-System',
-      liveUrl: 'https://online-fee-payment-and-reciept-syst.vercel.app/'
-    },
-    
-    // {
-    //   id: 5,
-    //   title: 'Portfolio Website',
-    //   description: 'A modern and responsive portfolio website showcasing projects, skills, and professional experience.',
-    //   image: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=500&h=300&fit=crop',
-    //   technologies: ['React', 'CSS3', 'Framer Motion', 'Responsive Design'],
-    //   githubUrl: 'https://github.com/yourusername/portfolio',
-    //   liveUrl: 'https://your-portfolio-demo.com'
-    // }
+// Project showcase with client-side category filtering.
+function Projects() {
+  const categories = [
+    "All",
+    ...new Set(projects.map((project) => project.category.split(" / ")[0])),
   ];
+  const [filter, setFilter] = useState("All");
+  const visible =
+    filter === "All"
+      ? projects
+      : projects.filter((project) => project.category.includes(filter));
 
   return (
-    <section className="projects" id="projects">
-      <div className="container">
-        <h2 className="section-title">
-          Browse My Recent<br />
-          <span className="highlight">Projects</span>
-        </h2>
-        
-        <div className="projects-grid">
-          {projects.map((project) => (
-            <div key={project.id} className="project-card">
-              <div className="project-image">
-                <img src={project.image} alt={project.title} />
-                <div className="project-overlay">
-                  <div className="project-links">
-                    <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="project-link">
-                      <i className="fab fa-github"></i>
-                      Github
-                    </a>
-                    <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="project-link">
-                      <i className="fas fa-external-link-alt"></i>
-                      Demo
-                    </a>
-                  </div>
+    <section className="section-wrap projects-section" id="projects">
+      <SectionHeading
+        eyebrow="Selected work"
+        title={
+          <>
+            A few things I've
+            <br />
+            <span>put into the world.</span>
+          </>
+        }
+      />
+      <div className="filter-row">
+        {categories.map((category) => (
+          <button
+            className={filter === category ? "filter active" : "filter"}
+            onClick={() => setFilter(category)}
+            aria-pressed={filter === category}
+            key={category}
+          >
+            {category}
+          </button>
+        ))}
+      </div>
+      <div className="projects-grid">
+        {visible.map((project, index) => (
+          <article
+            className="project-card"
+            key={project.id}
+          >
+            <div className="project-preview">
+              <span className="preview-number">0{index + 1}</span>
+              <span className="preview-code">&lt;/&gt;</span>
+              {project.image ? (
+                <img
+                  className="preview-image"
+                  src={project.image}
+                  alt={`${project.name} preview`}
+                  loading="lazy"
+                  decoding="async"
+                />
+              ) : (
+                <div className="preview-window">
+                  <span />
+                  <span />
+                  <span />
+                  <strong>{project.name}</strong>
                 </div>
+              )}
+            </div>
+            <div className="project-info">
+              <div className="project-title">
+                <div>
+                  <span className="project-category">{project.category}</span>
+                  <h3>{project.name}</h3>
+                </div>
+                <a
+                  href={project.github}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={`View ${project.name} source`}
+                >
+                  GH
+                </a>
               </div>
-              
-              <div className="project-content">
-                <h3 className="project-title">{project.title}</h3>
-                <p className="project-description">{project.description}</p>
-                
-                <div className="project-technologies">
-                  {project.technologies.map((tech, index) => (
-                    <span key={index} className="tech-badge">{tech}</span>
-                  ))}
-                </div>
+              <p>{project.description}</p>
+              <div className="tag-row">
+                {project.technologies.map((technology) => (
+                  <span key={technology}>{technology}</span>
+                ))}
+              </div>
+              <div className="project-links">
+                {project.liveDemo && (
+                  <a
+                    href={project.liveDemo}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Live project <span>↗</span>
+                  </a>
+                )}
+                <a href={project.github} target="_blank" rel="noreferrer">
+                  Source code <span>↗</span>
+                </a>
               </div>
             </div>
-          ))}
-        </div>
+          </article>
+        ))}
       </div>
     </section>
   );
-};
+}
 
 export default Projects;

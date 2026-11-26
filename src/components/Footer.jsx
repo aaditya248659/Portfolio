@@ -1,50 +1,35 @@
-import React from 'react';
-import '../css/Footer.css';
-
-const Footer = () => {
-  const currentYear = new Date().getFullYear();
-
+// Shared footer links and external profile shortcuts.
+function Footer() {
   return (
-    <footer className="footer">
-      <div className="container">
-        <div className="footer-content">
-          <div className="footer-text">
-            <p>Copyright &copy; {currentYear} Aaditya Pathak. All rights reserved.</p>
-          </div>
-          
-          {/* <div className="footer-links">
-            <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer">
-              <i className="fab fa-github"></i>
-            </a>
-            <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer">
-              <i className="fab fa-linkedin"></i>
-            </a>
-            <a href="mailto:your.email@example.com">
-              <i className="fas fa-envelope"></i>
-            </a>
-          </div> */}
-        </div>
-        
-        <div className="footer-nav">
-          <button onClick={() => document.getElementById('about').scrollIntoView({ behavior: 'smooth' })}>
-            About
-          </button>
-          <button onClick={() => document.getElementById('tech-stack').scrollIntoView({ behavior: 'smooth' })}>
-            Tech Stack
-          </button>
-          <button onClick={() => document.getElementById('projects').scrollIntoView({ behavior: 'smooth' })}>
-            Projects
-          </button>
-          <button onClick={() => document.getElementById('certificates').scrollIntoView({ behavior: 'smooth' })}>
-            Certificates
-          </button>
-          <button onClick={() => document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })}>
-            Contact
-          </button>
+    <footer className="site-footer">
+      <div className="section-wrap footer-inner">
+        <a className="brand" href="#home">
+          <span className="brand-mark">AP</span>
+          <span>
+            Aaditya<span className="brand-dot">.</span>
+          </span>
+        </a>
+        <p>Designed &amp; built with intention.</p>
+        <div className="social-links">
+          <a
+            href="https://github.com/aaditya248659"
+            target="_blank"
+            rel="noreferrer"
+          >
+            GitHub
+          </a>
+          <a
+            href="https://www.linkedin.com/in/aaditya-pathak/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            LinkedIn
+          </a>
+          <a href="mailto:aadityapratyaypathak@gmail.com">Email</a>
         </div>
       </div>
     </footer>
   );
-};
+}
 
 export default Footer;
